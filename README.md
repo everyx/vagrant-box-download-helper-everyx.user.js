@@ -1,6 +1,4 @@
 # vagrant-box-download-helper-everyx.user.js
-A user script to add a download button in atlas.hashicorp.com for you direct download.
+A user script to add a download button in [app.vagrantup.com](https://app.vagrantup.com/boxes/search) to help you boost the speed with your power download tools, enjoy!
 
-You can download vagrant box via https://atlas.hashicorp.com/boxes/search , enjoy!
-
-![Imgur](http://i.imgur.com/VbfPUrb.png?1)
+![Imgur](screenshot.jpg)
