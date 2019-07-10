@@ -5,34 +5,37 @@
 // @namespace      http://userscript.everyx.in/vagrant-box-download-helper
 // @author         everyx
 // @description    Add a download button in atlas.hashicorp.com.
-// @include        https://atlas.hashicorp.com/*
+// @include        https://app.vagrantup.com/*/boxes/*
 // @run-at         document-end
 // ==/UserScript==
 
 main();
 
 function main() {
+  var versionList = document.querySelectorAll(".page-header h3 a");
+  var panelList = document.querySelectorAll(".panel");
 
-  var elementList = document.querySelectorAll(".set-item");
-
-  for (var i = 0; i < elementList.length; i++) {
-    addDownloadButton(elementList[i]);
+  for (var i = 0; i < versionList.length; i++) {
+    addDownloadButton(versionList[i].href, panelList[i]);
   }
 }
 
-function addDownloadButton(element) {
-  var rows = element.querySelectorAll('.status');
-  var versionHref = element.querySelector('.row a:last-child').href;
+function addDownloadButton(versionLink, panelElement) {
+  var providerElements = panelElement.querySelectorAll('.list-group-item');
 
-  for (var i = 0; i < rows.length; i++) {
-    var currentRow = rows[i];
-    var downloadBtn = document.createElement('a');
-    downloadBtn.className ='button right icon ion-arrow-down-a';
-    downloadBtn.title = 'download';
-    downloadBtn.style = 'font-weight: bold; color:#2F88F7;';
-
-    var provider = currentRow.querySelector('.subtitle').innerHTML.trim().replace(/\s+/g, '').replace(/<.*$/g, '');
-    downloadBtn.href = versionHref + '/providers/' + provider + '.box';
-    currentRow.appendChild(downloadBtn);
+  for (var i=0; i<providerElements.length; i++) {
+    var element = providerElements[i]
+    console.log(element);
+    var downloadButton = document.createElement('a');
+    downloadButton.className ='pull-right glyphicon glyphicon-download';
+    downloadButton.title = 'download';
+  
+    var ignoreText = element.querySelector('small').innerHTML;
+    var provider = element.innerText.replace(ignoreText, '').trim();
+    downloadButton.href = versionLink + '/providers/' + provider + '.box';
+    console.log(downloadButton.href)
+  
+    element.querySelector('h4').appendChild(downloadButton);
+    
   }
 }
